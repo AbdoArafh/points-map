@@ -1,5 +1,7 @@
+let map;
+
 const showMap = (mapid = "map", initialCoords = [30, 31], initialZoom = 6) => {
-  const map = L.map(mapid).setView(initialCoords, initialZoom);
+  map = L.map(mapid, { center: initialCoords, zoom: initialZoom });
 
   L.tileLayer(
     "https://api.mapbox.com/styles/v1/abdoarafh/cks4ojlbg4ncb18o4jy282kka/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
@@ -19,46 +21,17 @@ const showMap = (mapid = "map", initialCoords = [30, 31], initialZoom = 6) => {
   const minRadius = 5;
   const maxRadius = 20 - minRadius;
 
-  fetch("data.json")
-    .then(response => response.json())
-    .then(data => {
-      const requestsArray = data.map(element => element.requests);
-      const max = Math.max(...requestsArray);
-      data.forEach(el => {
-        const circle = L.circleMarker([el.lat, el.long], {
-          color: primaryFontColor,
-          fillColor: "#ccf7e5",
-          fillOpacity: 0.8,
-          radius: (el.requests / max) * maxRadius + minRadius,
-          weight: 1,
-        }).addTo(map);
+  getDataArray().then(data => getCoords(data));
+};
 
-        // const movingCircle = L.circleMarker([30, 30], {
-        //   color: primaryFontColor,
-        //   fillColor: "#ccf7e5",
-        //   fillOpacity: 0.8,
-        //   radius: 10,
-        //   weight: 1,
-        // }).addTo(map);
-
-        // const step = 0.01;
-
-        // setInterval(() => {
-        //   const latlng = movingCircle.getLatLng();
-        //   const lat = latlng.lat;
-        //   const lng = latlng.lng;
-        //   movingCircle.setLatLng(L.latLng(lat + step, lng + step));
-        // }, 100);
-        //   circle.bindPopup(`requests: ${el.requests}`);
-
-        circle.bindTooltip(
-          `<div style="text-align: center"><h4 style="padding: 0; margin: 0;">Requests</h4><p style="color: ${primaryFontColor};padding: 0; margin: 0;">${el.requests}</p></div>`,
-          {
-            direction: "top",
-          }
-        );
-      });
-    });
+const getCoords = data => {
+  console.log("data: ", data);
+  const requestsArray = data.map(element => element.requests);
+  const areasLat = data.map(element => element.lat);
+  const areasLng = data.map(element => element.long);
+  map.panTo(L.latLng(avg(areasLat), avg(areasLng)));
+  console.log(requestsArray);
+  const max = Math.max(...requestsArray);
 };
 
 const getDataArray = async (link = "data.json") => {
@@ -67,4 +40,23 @@ const getDataArray = async (link = "data.json") => {
   return arr;
 };
 
+const avg = arr => arr.reduce((acc, curr) => acc + curr) / arr.length;
+
 // showMap("map");
+
+// data.forEach(el => {
+//     const circle = L.circleMarker([el.lat, el.long], {
+//       color: primaryFontColor,
+//       fillColor: "#ccf7e5",
+//       fillOpacity: 0.8,
+//       radius: (el.requests / max) * maxRadius + minRadius,
+//       weight: 1,
+//     }).addTo(map);
+
+//     circle.bindTooltip(
+//       `<div style="text-align: center"><h4 style="padding: 0; margin: 0;">Requests</h4><p style="color: ${primaryFontColor};padding: 0; margin: 0;">${el.requests}</p></div>`,
+//       {
+//         direction: "top",
+//       }
+//     );
+//   });
