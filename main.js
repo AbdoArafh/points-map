@@ -1,6 +1,6 @@
 let map;
 
-const showMap = (mapid = "map", initialCoords = [30, 31], initialZoom = 6) => {
+const showMap = (mapid = "map", initialCoords = [0, 0], initialZoom = 1) => {
   map = L.map(mapid, { center: initialCoords, zoom: initialZoom });
 
   L.tileLayer(
@@ -21,17 +21,22 @@ const showMap = (mapid = "map", initialCoords = [30, 31], initialZoom = 6) => {
   const minRadius = 5;
   const maxRadius = 20 - minRadius;
 
-  getDataArray().then(data => getCoords(data));
+  getDataArray().then(data => fitBounds(data));
 };
 
-const getCoords = data => {
-  console.log("data: ", data);
-  const requestsArray = data.map(element => element.requests);
+// const requestsArray = data.map(element => element.requests);
+// const max = Math.max(...requestsArray);
+
+const fitBounds = data => {
   const areasLat = data.map(element => element.lat);
   const areasLng = data.map(element => element.long);
-  map.panTo(L.latLng(avg(areasLat), avg(areasLng)));
-  console.log(requestsArray);
-  const max = Math.max(...requestsArray);
+  const topLeftCorner = L.latLng(Math.min(...areasLat), Math.min(...areasLng));
+  const bottomRightCorner = L.latLng(
+    Math.max(...areasLat),
+    Math.max(...areasLng)
+  );
+  map.fitBounds(L.latLngBounds(topLeftCorner, bottomRightCorner));
+  return data;
 };
 
 const getDataArray = async (link = "data.json") => {
