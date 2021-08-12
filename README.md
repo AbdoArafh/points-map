@@ -47,3 +47,5 @@ map.showMap();
 - `map.showData()` showes the data that you added the url for regularly you don't need to call it
 - `map.setMode($mode)` mode is string which is just "light" or "dark" and sets the mode of the map
 - `map.showMap()` obviously shows the map
+
+> Live demo on github pages [here](https://abdoarafh.github.io/points-map/)
