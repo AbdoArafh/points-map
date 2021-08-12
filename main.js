@@ -17,15 +17,35 @@ const showMap = (mapid = "map", initialCoords = [0, 0], initialZoom = 1) => {
     }
   ).addTo(map);
 
+  getDataArray()
+    .then(data => fitBounds(data))
+    .then(data => showData(data));
+};
+
+const showData = data => {
   const primaryFontColor = "#41b883";
   const minRadius = 5;
   const maxRadius = 20 - minRadius;
+  const requests = data.map(element => element.requests);
+  const maxRequest = Math.max(...requests);
 
-  getDataArray().then(data => fitBounds(data));
+  data.forEach(el => {
+    const circle = L.circleMarker([el.lat, el.long], {
+      color: primaryFontColor,
+      fillColor: "#ff9900",
+      fillOpacity: 0.8,
+      radius: (el.requests / maxRequest) * maxRadius + minRadius,
+      weight: 0,
+    }).addTo(map);
+
+    circle.bindTooltip(
+      `<div style="text-align: center"><h4 style="padding: 0; margin: 0;">Requests</h4><p style="color: ${primaryFontColor};padding: 0; margin: 0;">${el.requests}</p></div>`,
+      {
+        direction: "top",
+      }
+    );
+  });
 };
-
-// const requestsArray = data.map(element => element.requests);
-// const max = Math.max(...requestsArray);
 
 const fitBounds = data => {
   const areasLat = data.map(element => element.lat);
@@ -48,20 +68,3 @@ const getDataArray = async (link = "data.json") => {
 const avg = arr => arr.reduce((acc, curr) => acc + curr) / arr.length;
 
 // showMap("map");
-
-// data.forEach(el => {
-//     const circle = L.circleMarker([el.lat, el.long], {
-//       color: primaryFontColor,
-//       fillColor: "#ccf7e5",
-//       fillOpacity: 0.8,
-//       radius: (el.requests / max) * maxRadius + minRadius,
-//       weight: 1,
-//     }).addTo(map);
-
-//     circle.bindTooltip(
-//       `<div style="text-align: center"><h4 style="padding: 0; margin: 0;">Requests</h4><p style="color: ${primaryFontColor};padding: 0; margin: 0;">${el.requests}</p></div>`,
-//       {
-//         direction: "top",
-//       }
-//     );
-//   });
