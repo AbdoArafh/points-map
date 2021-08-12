@@ -28,7 +28,18 @@
         </div>
     </div>
     <script src="main.js"></script>
+    <input id="switchMode" type="button" value="☀" onclick="switchMode">
     <script>
+        let darkMode = true;
+        document.querySelector("#switchMode").onclick = event => {
+            if (event.target.value === "☀") {
+                darkMode = false;
+                event.target.value = "🌗";
+            } else {
+                darkMode = true;
+                event.target.value = "☀";
+            }
+        }
         const mapWrapper = document.getElementById("map");
         let mapShown = false;
         mapWrapper.addEventListener("click", (event) => {
