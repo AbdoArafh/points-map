@@ -40,15 +40,22 @@
             transform: translateY(2px);
             box-shadow: 0 1px black;
         }
+
+        .message {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            font-family: arial;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 
 <body>
     <div id="map" style="height: 410px; width: 100%">
-        <div
-            style="user-select: none; width: 100%; height: 100%; font-family: arial; display: flex; align-items: center; justify-content: center; cursor: pointer; background-color: white;">
-            <h1>Click to show</h1>
-        </div>
     </div>
     <script src="main.js"></script>
     <button id="switchMode" type="button" onclick="switchMode">
@@ -66,10 +73,18 @@
             }
         }
         const mapWrapper = document.getElementById("map");
+        const message = document.createElement("div");
+        message.className = "message";
+        const h1 = document.createElement("h1");
+        h1.textContent = "Click To Show The Map";
+        message.appendChild(h1);
+        mapWrapper.appendChild(message);
         let mapShown = false;
         mapWrapper.addEventListener("click", (event) => {
-            if (!mapShown)
+            if (!mapShown) {
                 map.showMap();
+                mapWrapper.removeChild(message);
+            }
             event.target.removeEventListener("click", () => { });
             mapShown = true;
         })
