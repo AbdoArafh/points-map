@@ -46,7 +46,7 @@
 <body>
     <div id="map" style="height: 410px; width: 100%">
         <div
-            style="user-select: none; width: 100%; height: 100%; font-family: arial; display: flex; align-items: center; justify-content: center; cursor: pointer">
+            style="user-select: none; width: 100%; height: 100%; font-family: arial; display: flex; align-items: center; justify-content: center; cursor: pointer; background-color: white;">
             <h1>Click to show</h1>
         </div>
     </div>
@@ -55,27 +55,21 @@
         ☀
     </button>
     <script>
-        let darkMode = true;
-        let tileLayer;
+        let map = new Map("map", "data.json");
         document.querySelector("#switchMode").onclick = event => {
-            if (darkMode) {
-                darkMode = false;
+            if (map.isDarkMode) {
+                map.setMode("light");
                 event.target.textContent = "🌗";
             } else {
-                darkMode = true;
+                map.setMode("dark")
                 event.target.textContent = "☀";
-            }
-            if (mapShown) {
-                switchMode();
             }
         }
         const mapWrapper = document.getElementById("map");
         let mapShown = false;
         mapWrapper.addEventListener("click", (event) => {
-            if (!mapShown) {
-                while (mapWrapper.firstChild) mapWrapper.removeChild(mapWrapper.firstChild);
-                showMap("map");
-            }
+            if (!mapShown)
+                map.showMap();
             event.target.removeEventListener("click", () => { });
             mapShown = true;
         })
