@@ -28,24 +28,32 @@
         </div>
     </div>
     <script src="main.js"></script>
-    <input id="switchMode" type="button" value="☀" onclick="switchMode">
+    <button id="switchMode" type="button" onclick="switchMode" style="cursor: pointer">
+        ☀
+    </button>
     <script>
         let darkMode = true;
+        let tileLayer;
         document.querySelector("#switchMode").onclick = event => {
-            if (event.target.value === "☀") {
+            if (darkMode) {
                 darkMode = false;
-                event.target.value = "🌗";
+                event.target.textContent = "🌗";
             } else {
                 darkMode = true;
-                event.target.value = "☀";
+                event.target.textContent = "☀";
+            }
+            if (mapShown) {
+                switchMode();
             }
         }
         const mapWrapper = document.getElementById("map");
         let mapShown = false;
         mapWrapper.addEventListener("click", (event) => {
-            if (!mapShown) while (mapWrapper.firstChild) mapWrapper.removeChild(mapWrapper.firstChild);
+            if (!mapShown) {
+                while (mapWrapper.firstChild) mapWrapper.removeChild(mapWrapper.firstChild);
+                showMap("map");
+            }
             event.target.removeEventListener("click", () => { });
-            showMap("map");
             mapShown = true;
         })
     </script>
