@@ -35,6 +35,8 @@ class Map {
   setMinAndMaxRadius(minr, maxr) {
     this.minRadius = minr;
     this.maxRadius = maxr;
+    this.circleMarkers = [];
+    this.showData();
   }
 
   showData() {
