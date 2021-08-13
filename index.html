@@ -62,7 +62,7 @@
         ☀
     </button>
     <script>
-        let map = new Map("map", "data.json");
+        let map = new Map("map", "data.json", { primaryColor: "#f90", isDarkMode: true });
         document.querySelector("#switchMode").onclick = event => {
             if (map.isDarkMode) {
                 map.setMode("light");

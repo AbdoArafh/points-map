@@ -29,17 +29,24 @@ this is a points map made to display json data about shipping requests
 #### JS
 
 ```js
-const map = new Map(mapId, jsonDataUrl, isDarkMode);
+const map = new Map(mapId, jsonDataUrl, Options);
 map.showMap();
 ```
 
-### Details
+### Arguments Details
 
-| Argument Name | type    | default | details                                |
-| ------------- | ------- | ------- | -------------------------------------- |
-| `mapId`       | string  | --      | you set it as you like 😁              |
-| `jsonDataUrl` | string  | --      | the Url to fetch/request the data from |
-| `isDarkMode`  | boolean | true    | set it to true to enable dark mode     |
+| Argument Name | type   | default | details                                |
+| ------------- | ------ | ------- | -------------------------------------- |
+| `mapId`       | string | --      | you set it as you like 😁              |
+| `jsonDataUrl` | string | --      | the Url to fetch/request the data from |
+
+### Options
+
+| Argument Name  | type    | default | details                                                  |
+| -------------- | ------- | ------- | -------------------------------------------------------- |
+| `isDarkMode`   | boolean | true    | set it to true to enable dark mode                       |
+| `primaryColor` | string  | "#f90"  | the color of the circle marker and font color of tooltip |
+| `fillOpacity`  | number  | 0.8     | decides the fill opacity of the circle marker            |
 
 ### Methods
 

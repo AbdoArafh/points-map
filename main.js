@@ -1,10 +1,16 @@
 class Map {
-  constructor(mapid, jsonLink, isDarkMode = true) {
+  constructor(
+    mapid,
+    jsonLink,
+    { isDarkMode = true, primaryColor = "#f90", fillOpacity = 0.8 }
+  ) {
     this.map = L.map(mapid, { center: [0, 0], zoom: 1 });
     this.jsonLink = jsonLink;
     this.data = [];
     this.circleMarkers = [];
     this.isDarkMode = isDarkMode;
+    this.primaryColor = primaryColor;
+    this.fillOpacity = fillOpacity;
     this.updateDataArray = this.updateDataArray.bind(this);
     this.fitBounds = this.fitBounds.bind(this);
     this.showData = this.showData.bind(this);
@@ -40,7 +46,6 @@ class Map {
   }
 
   showData() {
-    this.primaryFontColor = "#41b883";
     this.minRadius = 5;
     this.maxRadius = 15;
     const requests = this.data.map(element => element.requests);
@@ -48,14 +53,14 @@ class Map {
 
     this.circleMarkers = this.data.map(el => {
       const circle = L.circleMarker([el.lat, el.long], {
-        fillColor: "#ff9900",
-        fillOpacity: 0.8,
+        fillColor: this.primaryColor,
+        fillOpacity: this.fillOpacity,
         radius: (el.requests / maxRequest) * this.maxRadius + this.minRadius,
         weight: 0,
       }).addTo(this.map);
 
       circle.bindTooltip(
-        `<div style="text-align: center"><h4 style="padding: 0; margin: 0;">Requests</h4><p style="color: ${this.primaryFontColor};padding: 0; margin: 0;">${el.requests}</p></div>`,
+        `<div style="text-align: center"><h4 style="padding: 0; margin: 0;">Requests</h4><p style="color: ${this.primaryColor};padding: 0; margin: 0;">${el.requests}</p></div>`,
         {
           direction: "top",
         }
