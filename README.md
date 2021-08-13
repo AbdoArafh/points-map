@@ -50,7 +50,7 @@ map.showMap();
 
 ### Methods
 
-- `map.setMinAndMaxRadius(minRadius, maxRadius)` self describing. but just in case this sets the circle marker minimum and maximum radius.
+- `map.setMinAndMaxRadius($minRadius, $maxRadius)` self describing. but just in case this sets the circle marker minimum and maximum radius.
 - `map.showData()` showes the data that you added the url for regularly you don't need to call it
 - `map.setMode($mode)` mode is string which is just "light" or "dark" and sets the mode of the map
 - `map.showMap()` obviously shows the map
