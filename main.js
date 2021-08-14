@@ -8,6 +8,8 @@ class Map {
     this.jsonLink = jsonLink;
     this.data = [];
     this.circleMarkers = [];
+    this.minRadius = 5;
+    this.maxRadius = 15;
     this.isDarkMode = isDarkMode;
     this.primaryColor = primaryColor;
     this.fillOpacity = fillOpacity;
@@ -46,8 +48,6 @@ class Map {
   }
 
   showData() {
-    this.minRadius = 5;
-    this.maxRadius = 15;
     const requests = this.data.map(element => element.requests);
     const maxRequest = Math.max(...requests);
 
