@@ -80,6 +80,8 @@
         message.appendChild(h1);
         mapWrapper.appendChild(message);
         let mapShown = false;
+        // I'm aware that you can add the once option in the options to do the same thing
+        // but at this point I'm planning on changing anything
         mapWrapper.addEventListener("click", (event) => {
             if (!mapShown) {
                 map.showMap();
