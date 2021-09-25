@@ -1,4 +1,4 @@
-class Map {
+class PointsMap {
   constructor(
     mapid,
     jsonLink,

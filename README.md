@@ -29,7 +29,7 @@ this is a points map made to display json data about shipping requests
 #### JS
 
 ```js
-const map = new Map(mapId, jsonDataUrl, Options);
+const map = new PointsMap(mapId, jsonDataUrl, Options);
 map.showMap();
 ```
 
